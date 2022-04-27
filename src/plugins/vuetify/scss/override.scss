@@ -1,0 +1,282 @@
+
+
+//
+//* ——— Card ——————————————————
+//
+
+$card-spacer: 20px;
+$card-spacer-content: 16px;
+
+.v-card {
+  .v-card__title {
+    line-height: 1;
+    padding-top: $card-spacer;
+    padding-bottom: $card-spacer;
+  }
+  .v-card__title ~ .v-card__title {
+    padding-top: $card-spacer-content;
+  }
+
+  .v-card__subtitle,
+  .v-card-text,
+  .v-card__actions {
+    padding-top: 0;
+
+    @at-root {
+      .v-card {
+        > .v-card__subtitle:first-child,
+        > .v-card__text:first-child,
+        > .v-card__actions:first-child {
+          padding-top: $card-spacer;
+        }
+      }
+    }
+
+    &:last-child {
+      padding-bottom: $card-spacer;
+    }
+  }
+
+  .v-divider + {
+    .v-card__subtitle,
+    .v-card-text,
+    .v-card__actions {
+      padding-top: $card-spacer-content;
+    }
+  }
+
+  .v-card__actions {
+    &.dense {
+      padding: 0 calc(#{$card-spacer} - 8px) calc(#{$card-spacer} - 8px);
+      .v-btn {
+        &:not(.v-btn--icon) {
+          min-width: 68px;
+        }
+      }
+    }
+  }
+}
+
+.v-card.v-theme--dark {
+  &.v-card--variant-contained {
+    background-color: map-get($material-dark, 'cards');
+  }
+}
+
+
+//
+//* ——— Button ——————————————————
+//
+
+.v-application {
+  .v-btn:not(.v-btn--outlined) {
+    &.primary,
+    &.secondary,
+    &.accent,
+    &.success,
+    &.error,
+    &.warning,
+    &.info {
+      color: map-get($shades, 'white');
+    }
+  }
+}
+
+$btn-custom-heights: (
+  'x-small': 26,
+  'small': 30,
+  'default': 38,
+  'large': 42,
+  'x-large': 46,
+);
+
+.v-btn {
+  &:not(.v-btn--round) {
+    @each $name, $height in $btn-custom-heights {
+      &.v-size--#{$name} {
+        height: #{$height}px !important;
+        // min-width: #{round($size * 1.777777777777778)}px // default ratio
+      }
+    }
+  }
+}
+
+.v-btn--icon {
+  @each $name, $height in $btn-custom-heights {
+    &.v-size--#{$name} {
+      height: #{$height}px !important;
+      width: #{$height}px !important;
+    }
+  }
+}
+
+@include app-elevation('v-btn--is-elevated', 3, !important);
+@include app-elevation('v-btn--is-elevated:hover', 4, !important);
+@include app-elevation('v-btn--is-elevated:active', 2, !important);
+
+//
+//* ——— Menu ——————————————————
+//
+
+.v-menu__content {
+  &:not(.list-style) {
+    .v-list-item {
+      height: 2.375rem;
+      min-height: 2.375rem;
+
+      .v-list-item__icon {
+        margin: 8px 0;
+      }
+    }
+
+    .v-list.v-list--dense {
+      .v-list-item {
+        min-height: 2rem;
+        height: 2rem;
+      }
+
+      .v-list-item__icon {
+        margin: 5px 0;
+      }
+
+      .v-list-item__title,
+      .v-list-item__subtitle,
+      .v-list-item .v-list-item__title,
+      .v-list-item .v-list-item__subtitle {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+//
+//* ——— Form ——————————————————
+//
+
+@if $customize-form-icons {
+  .v-input {
+    .v-input__control {
+      .v-field {
+        border: 2px solid #e3e3e3;
+        border-radius: 0.5rem;
+        &:hover {
+          transition: border 0.5s;
+          border: 2px solid map-get($light-blue, 'lighten-2');
+        }
+        &.v-field--active {
+          border: 2px solid map-get($light-blue, 'accent-4');
+        }
+        .v-field__field {
+          min-height: 35px;
+          .v-field-label--floating {
+            opacity: 1;
+            color: map-get($light-blue, 'accent-4');
+            background-color: map-get($shades, 'white');
+            padding: 3px;
+            font-weight: bold;
+            transform: translateY(-80%);
+          }
+        }
+        .v-field__overlay {
+          background-color: map-get($shades, 'white');
+        }
+        .v-field__outline {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.v-application.v-theme--dark {
+  .v-input {
+    .v-input__control {
+      .v-field {
+        .v-field__overlay {
+          background-color: #232323;
+        }
+        .v-field__field {
+          .v-field-label--floating {
+            background-color: #232323;
+          }
+        }
+      }
+    }
+  } 
+}
+
+.v-input {
+  &.error--text {
+    .v-text-field__details {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+//
+//* ——— Slider ——————————————————
+//
+
+.v-slider__track-background {
+  opacity: 0.38;
+}
+
+.v-slider__thumb-label-container {
+  svg {
+    color: #fff;
+  }
+}
+
+//
+//* ——— Input ——————————————————
+//
+
+@include theme-diff(v-input, #fff, map-get($material-light, 'text', 'secondary')) using ($value) {
+  &.v-text-field--solo-inverted.v-input--is-focused {
+    input,
+    textarea {
+      color: $value !important;
+    }
+  }
+}
+
+//
+//* ——— Switch ——————————————————
+//
+
+.v-input--selection-controls__ripple:before {
+  opacity: 0.08 !important;
+}
+
+
+@media (max-width: 450px) {
+  .v-data-table {
+    .v-data-footer {
+      .v-data-footer__select {
+        min-width: 100%;
+        // @include ltr() {
+        //   margin-left: 0;
+        // }
+        // @include rtl() {
+        //   margin-right: 0;
+        // }
+      }
+    }
+  }
+}
+
+// @include theme--child(bg-body) using ($material) {
+//   background-color: map-get($material, 'background');
+// }
+
+//
+//* ——— App ——————————————————
+//
+
+.v-application {
+  transition: background 0.8s;
+  & .v-card {
+    transition: background 0.3s;
+  }
+}
+

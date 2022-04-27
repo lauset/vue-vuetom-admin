@@ -1,0 +1,259 @@
+$primary-shade--light: #5e5669;
+$primary-shade--dark: #e7e3fc;
+$shadow-color--light: $primary-shade--light;
+$shadow-color--dark: #131120;
+$customize-form-icons: true;
+
+$theme-colors: (
+  'primary': var(--v-primary-base),
+  'secondary': var(--v-secondary-base),
+  'accent': var(--v-accent-base),
+  'error': var(--v-error-base),
+  'info': var(--v-info-base),
+  'success': var(--v-success-base),
+  'warning': var(--v-warning-base),
+  'background': var(--v-theme-background),
+);
+
+// #region Override Light Theme's Pure Black to Primary Shade
+
+$material-light: (
+  'calendar': (
+    'text-color': $primary-shade--light,
+    'past-color': rgba($primary-shade--light, 0.38),
+  ),
+  'code': (
+    'background': rgba($primary-shade--light, 0.05),
+  ),
+  'dividers': rgba($primary-shade--light, 0.12),
+  'text': (
+    'primary': rgba($primary-shade--light, 0.87),
+    'secondary': rgba($primary-shade--light, 0.6),
+    'disabled': rgba($primary-shade--light, 0.38),
+  ),
+  'icons': (
+    'active': rgba($primary-shade--light, 0.54),
+    'inactive': rgba($primary-shade--light, 0.38),
+  ),
+  'inputs': (
+    'box': rgba($primary-shade--light, 0.04),
+    'solo-inverted': rgba($primary-shade--light, 0.06),
+  ),
+  'buttons': (
+    'disabled': rgba($primary-shade--light, 0.26),
+    'focused': rgba($primary-shade--light, 0.12),
+  ),
+  'selection-controls': (
+    'disabled': rgba($primary-shade--light, 0.26),
+    'track': (
+      'inactive': rgba($primary-shade--light, 0.38),
+      'disabled': rgba($primary-shade--light, 0.12),
+    ),
+  ),
+  'slider': (
+    'active': rgba($primary-shade--light, 0.38),
+    'inactive': rgba($primary-shade--light, 0.26),
+    'disabled': rgba($primary-shade--light, 0.26),
+    'discrete': $primary-shade--light,
+  ),
+  'toggle-buttons': (
+    'color': $primary-shade--light,
+  ),
+  'text-fields': (
+    'filled': rgba($primary-shade--light, 0.06),
+    'filled-hover': rgba($primary-shade--light, 0.12),
+    'outlined': rgba($primary-shade--light, 0.38),
+    'outlined-disabled': rgba($primary-shade--light, 0.26),
+    'outlined-hover': rgba($primary-shade--light, 0.86),
+  ),
+  'input-bottom-line': rgba($primary-shade--light, 0.42),
+  'stepper': (
+    'completed': rgba($primary-shade--light, 0.87),
+    'hover': rgba($primary-shade--light, 0.54),
+  ),
+  'fg-color': $primary-shade--light,
+  'text-color': $primary-shade--light,
+);
+
+// #endregion
+
+// #region Override Light Theme
+
+$material-light: (
+  'app-bar': map-get($shades, 'white'),
+  'background': #f4f5fa,
+  'calendar': (
+    'line-color': rgba(93, 89, 98, 0.1),
+    'outside-background-color': transparent,
+  ),
+  'chips': rgba($primary-shade--light, 0.06),
+  'dividers': rgba($primary-shade--light, 0.14),
+  'input-bottom-line': rgba($primary-shade--light, 0.14),
+  'inputs': (
+    'solo-inverted': rgba($primary-shade--light, 0.03),
+  ),
+  'table': (
+    'active': rgba($primary-shade--light, 0.08),
+    'hover': rgba($primary-shade--light, 0.04),
+  ),
+  'tabs': rgba($primary-shade--light, 0.76),
+  'text': (
+    'secondary': rgba($primary-shade--light, 0.68),
+  ),
+  'text-fields': (
+    'filled': rgba($primary-shade--light, 0.03),
+    'filled-hover': rgba($primary-shade--light, 0.08),
+    'outlined': rgba($primary-shade--light, 0.22),
+    'outlined-hover': rgba($primary-shade--light, 0.28),
+    'outlined-disabled': rgba($primary-shade--light, 0.22),
+  ),
+  'selection-controls': (
+    'thumb': (
+      'inactive': #fafafa,
+    ),
+  ),
+  'status-bar': (
+    'regular': map-get($shades, 'white'),
+  ),
+  'picker': (
+    'clock': #f5f5f5,
+  ),
+  'icons': (
+    'active': rgba($primary-shade--light, 0.68),
+  ),
+  'primary-shade': $primary-shade--light,
+  'shadow-color': $shadow-color--light,
+);
+
+// #endregion
+
+// #region Override Dark Theme's Pure Black to Primary Shade
+
+$material-dark: (
+  'calendar': (
+    'text-color': $primary-shade--dark,
+    'past-color': rgba($primary-shade--dark, 0.5),
+  ),
+  'code': (
+    'background': rgba($primary-shade--dark, 0.1),
+  ),
+  'kbd': (
+    'color': $primary-shade--dark,
+  ),
+  'dividers': rgba($primary-shade--dark, 0.12),
+  'text': (
+    'theme': $primary-shade--dark,
+    'primary': $primary-shade--dark,
+    'secondary': rgba($primary-shade--dark, 0.7),
+    'disabled': rgba($primary-shade--dark, 0.5),
+  ),
+  'icons': (
+    'active': $primary-shade--dark,
+    'inactive': rgba($primary-shade--dark, 0.5),
+  ),
+  'inputs': (
+    'box': $primary-shade--dark,
+    'solo-inverted': rgba($primary-shade--dark, 0.16),
+    'solo-inverted-focused': $primary-shade--dark,
+  ),
+  'buttons': (
+    'disabled': rgba($primary-shade--dark, 0.3),
+    'focused': rgba($primary-shade--dark, 0.12),
+    'focused-alt': rgba($primary-shade--dark, 0.1),
+  ),
+  'selection-controls': (
+    'disabled': rgba($primary-shade--dark, 0.3),
+    'track': (
+      'inactive': rgba($primary-shade--dark, 0.3),
+      'disabled': rgba($primary-shade--dark, 0.1),
+    ),
+  ),
+  'slider': (
+    'active': rgba($primary-shade--dark, 0.3),
+    'inactive': rgba($primary-shade--dark, 0.2),
+    'disabled': rgba($primary-shade--dark, 0.2),
+    'discrete': $primary-shade--dark,
+  ),
+  'tabs': rgba($primary-shade--dark, 0.6),
+  'toggle-buttons': (
+    'color': $primary-shade--dark,
+  ),
+  'text-fields': (
+    'filled': rgba($primary-shade--dark, 0.08),
+    'filled-hover': rgba($primary-shade--dark, 0.16),
+    'outlined': rgba($primary-shade--dark, 0.24),
+    'outlined-disabled': rgba($primary-shade--dark, 0.16),
+    'outlined-hover': $primary-shade--dark,
+  ),
+  'input-bottom-line': rgba($primary-shade--dark, 0.7),
+  'stepper': (
+    'active': rgba($primary-shade--dark, 1),
+    'completed': rgba($primary-shade--dark, 0.87),
+    'hover': rgba($primary-shade--dark, 0.75),
+  ),
+  'color-picker': (
+    'checkerboard': rgba($primary-shade--dark, 0.12),
+  ),
+  'fg-color': $primary-shade--dark,
+  'text-color': $primary-shade--dark,
+);
+
+// #endregion
+
+// #region Override Dark Theme
+
+$material-dark: (
+  'app-bar': #312d4b,
+  'background': #28243d,
+  'cards': #2d344b,
+  'calendar': (
+    'background-color': #312d4b,
+    'line-color': rgba(247, 244, 254, 0.14),
+    'outside-background-color': transparent,
+  ),
+  'chips': rgba($primary-shade--dark, 0.06),
+  'dividers': rgba($primary-shade--dark, 0.14),
+  'input-bottom-line': rgba($primary-shade--dark, 0.14),
+  'inputs': (
+    'solo-inverted': rgba($primary-shade--dark, 0.03),
+  ),
+  'navigation-drawer': #312d4b,
+  'table': (
+    'active': rgba($primary-shade--dark, 0.08),
+    'hover': rgba($primary-shade--dark, 0.04),
+  ),
+  'tabs': rgba($primary-shade--dark, 0.76),
+  'text': (
+    'theme': map-get($shades, 'white'),
+    'primary': rgba($primary-shade--dark, 0.87),
+    'secondary': rgba($primary-shade--dark, 0.68),
+  ),
+  'text-fields': (
+    'filled': rgba($primary-shade--dark, 0.03),
+    'filled-hover': rgba($primary-shade--dark, 0.08),
+    'outlined': rgba($primary-shade--dark, 0.22),
+    'outlined-hover': rgba($primary-shade--dark, 0.28),
+    'outlined-disabled': rgba($primary-shade--dark, 0.22),
+  ),
+  'selection-controls': (
+    'thumb': (
+      'inactive': #e0e0e0,
+    ),
+  ),
+  'status-bar': (
+    'regular': #312d4b,
+  ),
+  'icons': (
+    'active': rgba($primary-shade--dark, 0.68),
+  ),
+  'picker': (
+    'body': #28243d,
+    'clock': #312d4b,
+    'indeterminateTime': #28243d,
+  ),
+  'bg-color': #312d4b,
+  'primary-shade': $primary-shade--dark,
+  'shadow-color': $shadow-color--dark,
+);
+
+// #endregion
