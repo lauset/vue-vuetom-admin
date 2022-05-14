@@ -1,0 +1,24 @@
+.welcome-wrapper {
+  height: 999px;
+  .v-btn--icon.v-btn--density-default {
+    background-color: transparent;
+    max-width: 30px;
+    max-height: 30px;
+    box-shadow: none;
+    right: 10px;
+    top: 10px;
+  }
+  
+  .v-btn--elevated:hover, .v-btn--elevated:focus {
+    box-shadow: none !important;
+    background-color: #e9e9e9;
+  }
+}
+
+.v-theme--dark {
+  .welcome-wrapper {
+    .v-btn--elevated:hover, .v-btn--elevated:focus {
+      background-color: #121722;
+    } 
+  }
+}
