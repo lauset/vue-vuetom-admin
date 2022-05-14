@@ -57,11 +57,12 @@ $card-spacer-content: 16px;
   }
 }
 
-.v-card.v-theme--dark {
-  &.v-card--variant-contained {
-    background-color: map-get($material-dark, 'cards');
-  }
+@include theme--child('v-card--variant-contained ') using ($material) {
+  background-color: map-get($material, 'cards');
 }
+
+@include app-elevation('v-card--variant-contained', 6, !important);
+@include app-elevation('v-theme--dark.v-card--variant-contained', 4, !important);
 
 
 //
@@ -171,7 +172,10 @@ $btn-custom-heights: (
           .v-field-label--floating {
             opacity: 1;
             color: map-get($light-blue, 'accent-4');
+            // background-color: inherit;
+            // backdrop-filter: blur(10px);
             background-color: map-get($shades, 'white');
+            border-radius: 5px;
             padding: 3px;
             font-weight: bold;
             transform: translateY(-80%);
@@ -192,13 +196,13 @@ $btn-custom-heights: (
   .v-input {
     .v-input__control {
       .v-field {
-        .v-field__overlay {
-          background-color: #232323;
-        }
         .v-field__field {
           .v-field-label--floating {
-            background-color: #232323;
+            background-color: map-get($material-dark, 'cards');
           }
+        }
+        .v-field__overlay {
+          background-color: map-get($material-dark, 'cards');
         }
       }
     }
@@ -277,6 +281,9 @@ $btn-custom-heights: (
   transition: background 0.8s;
   & .v-card {
     transition: background 0.3s;
+  }
+  a {
+    text-decoration: none;
   }
 }
 

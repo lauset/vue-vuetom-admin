@@ -5,7 +5,8 @@ const light: ThemeDefinition = {
   colors: {
     primary: '#03A9F4',
     accent: '#0d6efd',
-    secondary: '#8A8D93',
+    secondary: '#EC407A',
+    describe: '#8A8D93',
     success: '#56CA00',
     info: '#16B1FF',
     warning: '#FFB400',
@@ -19,7 +20,8 @@ const dark: ThemeDefinition = {
   colors: {
     primary: '#039BE5',
     accent: '#0d6efd',
-    secondary: '#8A8D93',
+    secondary: '#EC407A',
+    describe: '#8A8D93',
     success: '#56CA00',
     info: '#16B1FF',
     warning: '#FFB400',
