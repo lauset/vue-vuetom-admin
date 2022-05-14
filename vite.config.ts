@@ -19,12 +19,18 @@ export default defineConfig(({ mode }: UserConfig): UserConfig => {
       open: true,
       https: false,
       proxy: {
-        '/api': {
-          target: 'http://localhost:8761',
+        '/haut': {
+          target: 'https://api.jinkex.com',
           timeout: 8000,
           changeOrigin: true,
-          rewrite: pathStr => pathStr.replace('/api', '/api'),
+          rewrite: pathStr => pathStr.replace('/haut', '')
         },
+        '/m1': {
+          target: 'https://www.fastmock.site/mock/9d7d214a196f7a703ff54d6a07235871/m1',
+          timeout: 8000,
+          changeOrigin: true,
+          rewrite: pathStr => pathStr.replace('/m1', '')
+        }
       },
     },
     build: {
