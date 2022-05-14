@@ -7,15 +7,20 @@ import {
 import { useSettingStore } from '@/store/modules/settings'
 import VerticalMenu from './menu/VerticalMenu'
 import ThemeSwitcher from './common/ThemeSwitcher'
+import LoginBtn from '../components/LoginBtn'
+import { useHautStore } from '@/store/modules/haut'
 export default defineComponent({
   components: {
     'vertical-menu': VerticalMenu,
-    'theme-switcher': ThemeSwitcher
+    'theme-switcher': ThemeSwitcher,
+    'login-btn': LoginBtn
   },
   setup() {
     const { proxy }: any = getCurrentInstance()
+    const haut = useHautStore()
     const settings = useSettingStore()
     const theme = computed(() => settings.getBlankTheme)
+    const name = haut.getName
     return () => (
       <v-app theme={theme.value}>
         <vertical-menu></vertical-menu>
@@ -32,7 +37,7 @@ export default defineComponent({
         <div class="d-flex align-center mx-6">
           <v-spacer></v-spacer>
           <a
-            href="https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free"
+            href="https://github.com/lauset/vue-vuetom-admin"
             target="_blank"
             rel="nofollow"
           >
@@ -41,13 +46,16 @@ export default defineComponent({
             </v-icon>
           </a>
           <theme-switcher></theme-switcher>
+          <div style={['padding: 0 1rem;']}>Haut: {name}</div>
         </div>
       </div>
     </v-app-bar>
         <v-main>
-          <v-card class='rounded-lg h-auto ma-6 pa-6'>
+          <div class="app-content-container boxed-container pa-6">
             <router-view />
-          </v-card>
+            <login-btn></login-btn>
+            {/* <slot></slot> */}
+          </div>
         </v-main>
       </v-app>
     )

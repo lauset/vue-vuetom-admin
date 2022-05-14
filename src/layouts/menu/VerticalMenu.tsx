@@ -1,4 +1,10 @@
-import { defineComponent, computed, ref, reactive } from 'vue'
+import {
+  defineComponent,
+  computed,
+  ref,
+  reactive,
+  getCurrentInstance,
+} from 'vue'
 import MenuGroup from './MenuGroup'
 import MenuLink from './MenuLink'
 import './VerticalMenu.scss'
@@ -10,6 +16,7 @@ export default defineComponent({
     default: null,
   },
   setup(props) {
+    const { proxy }: any = getCurrentInstance()
     const icons = {
       mdiHomeOutline: 'mdi-home-outline',
       mdiAlphaTBoxOutline: 'mdi-alpha-t-box-outline',
@@ -19,8 +26,11 @@ export default defineComponent({
       mdiFileOutline: 'mdi-file-outline',
       mdiFormSelect: 'mdi-form-select',
       mdiAccountCogOutline: 'mdi-account-cog-outline',
+      mdiHeli: 'mdi-helicopter',
+      mdiDashboard: 'mdi-certificate-outline',
     }
     const isDrawerOpen = true
+    const logoSrc = proxy.getAssetsImg('logos/logo01.png')
     return () => (
       <>
         <v-navigation-drawer
@@ -37,57 +47,55 @@ export default defineComponent({
               to='/'
               class='d-flex align-center text-decoration-none'
             >
-              {/* <v-img
-                src={() => {getAssetsImg('logos/logo01.png')}}
+              <v-img
+                src={logoSrc}
                 max-height='30px'
                 max-width='30px'
+                min-height='30px'
+                min-width='30px'
                 alt='logo'
                 contain
                 eager
                 class='app-logo me-3'
-              ></v-img> */}
+              ></v-img>
               <v-slide-x-transition>
                 <h2 class='app-title text-primary'>Vuetom</h2>
               </v-slide-x-transition>
             </router-link>
           </div>
           <v-list expand shaped class='vertical-nav-menu-items pr-5'>
-            <MenuLink
-              title='Dashboard'
-              to={{ name: 'Welcome' }}
-            ></MenuLink>
+            <MenuLink title='Dashboard' to={{ name: 'Welcome' }} icon={icons.mdiDashboard}></MenuLink>
             <MenuLink
               title='Account Settings'
               to={{ name: 'Account' }}
               icon={icons.mdiAccountCogOutline}
             ></MenuLink>
-            {/* <MenuGroup
+            <MenuGroup
               title='Pages'
               icon={icons.mdiFileOutline}
               v-slots={{
                 default: () => (
                   <>
-                  <h3>333</h3>
                     <MenuLink
-                      title='Login'
-                      to={{ name: 'pages-login' }}
+                      title='New Account Page'
+                      to={{ name: 'Account' }}
                       target='_blank'
                     ></MenuLink>
                     <MenuLink
-                      title='Register'
-                      to={{ name: 'pages-register' }}
-                      target='_blank'
-                    ></MenuLink>
-                    <MenuLink
-                      title='Error'
-                      to={{ name: 'error-404' }}
-                      target='_blank'
+                      title='Error Page'
+                      to={{ name: 'Err404' }}
                     ></MenuLink>
                   </>
                 ),
               }}
-            ></MenuGroup> */}
-            {/* <!-- <nav-menu-section-title title="USER INTERFACE"></nav-menu-section-title> --> */}
+            ></MenuGroup>
+            <div class="vt-line"></div>
+            <MenuLink title='Course' to={{ name: 'Course' }} icon={icons.mdiAlphaTBoxOutline}></MenuLink>
+            <MenuLink
+              title='Vuetom'
+              to={{ name: 'Vuetom' }}
+              icon={icons.mdiHeli}
+            ></MenuLink>
             {/* <MenuLink
               title='Typography'
               to={{ name: 'typography' }}

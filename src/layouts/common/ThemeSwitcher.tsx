@@ -9,7 +9,7 @@ export default defineComponent({
     }
     return () => (
       <v-fade-transition mode='out-in'>
-        <v-icon
+        <v-icon class="text-accent"
           key={'$vuetify.theme.dark'}
           onClick={() => changeTheme()}
         >

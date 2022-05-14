@@ -34,19 +34,19 @@
         <v-card-text>
           <v-form>
             <v-text-field
-              v-model="email"
+              v-model="num"
               outlined
-              label="Email"
-              placeholder="john@example.com"
+              label="Account"
+              placeholder="admin"
               hide-details
               class="mb-3"
             ></v-text-field>
+            <br />
             <v-text-field
               v-model="password"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
               label="Password"
-              placeholder="············"
               hide-details
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
@@ -63,9 +63,9 @@
         </v-card-text>
         <!-- create new account  -->
         <v-card-text class="d-flex align-center justify-center flex-wrap mt-2">
-          <span class="me-2"> New on our platform? </span>
-          <router-link :to="{ name: 'Err404' }">
-            Create an account
+          <span class="me-2"> Skip Login </span>
+          <router-link :to="{ path: '/index' }">
+            Enter the home page
           </router-link>
         </v-card-text>
         <!-- divider -->
@@ -95,9 +95,7 @@
       class="auth-mask-bg"
       :src="
         getAssetsImg(
-          `/cover/bg-${
-            $vuetify.theme.current == 'dark' ? 'dark' : 'light'
-          }.png`,
+          `cover/bg-${$vuetify.theme.current == 'dark' ? 'dark' : 'light'}.png`,
         )
       "
     />
@@ -119,16 +117,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settings'
+import { useHautStore } from '@/store/modules/haut'
 const settings = useSettingStore()
 const router = useRouter()
 const route = useRoute()
 const isPasswordVisible = ref(false)
-const email = ref('')
-const password = ref('')
+const num = ref('admin')
+const password = ref('admin')
 const theme = ref('')
+const { proxy } = getCurrentInstance()
+const m = proxy.$msg
+const haut = useHautStore()
 const socialLink = [
   {
     icon: 'mdi-facebook',
@@ -148,7 +150,29 @@ watch(
     settings.setBlankTheme(newVal === 'dark' ? 'dark' : 'light')
   },
 )
-const handleSubmit = () => {
-  router.replace((route.query.redirect as string) ?? '/vertical')
+const handleSubmit = async () => {
+  if (num.value.trim() == '' || password.value.trim() == '') {
+    return m.warning('-.-', { details: 'Please fill in the form' })
+  }
+  m.loading('Loading', { details: 'Login...' })
+  const data = {
+    num: num.value,
+    password: password.value,
+  }
+  if (data.num == 'admin' && data.password == 'admin') {
+    router.replace((route.query.redirect as string) ?? '/index')
+    m.closeAll()
+    m.success('Success', { details: 'Login Success!' })
+    return
+  }
+  try {
+    await haut.login(data).finally(() => m.closeAll())
+    m.success('Success', { details: 'Login Success!' })
+    setTimeout(() =>
+      router.replace((route.query.redirect as string) ?? '/index'),
+    )
+  } catch (error: any) {
+    m.error('Error', { details: error.message })
+  }
 }
 </script>

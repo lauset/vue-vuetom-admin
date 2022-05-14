@@ -16,6 +16,10 @@ export default defineComponent({
       type: String,
       default: undefined,
     },
+    target: {
+      type: String,
+      required: false,
+    },
     to: {
       type: Object,
       required: true
@@ -27,6 +31,7 @@ export default defineComponent({
       <>
         <v-list-item
           to={props.to}
+          target={props.target}
           class='vertical-nav-menu-link'
           active-class='bg-gradient-primary white--text'
         >
