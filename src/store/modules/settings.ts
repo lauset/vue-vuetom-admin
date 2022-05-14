@@ -36,6 +36,15 @@ export const useSettingStore = defineStore({
     ...defaultConfig,
     ...localThemeConfig,
   }),
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: SETTING_KEY,
+        storage: localStorage
+      }
+    ]
+  },
   getters: {
     getBlankTheme(): ThemeName {
       return this.blankTheme
@@ -47,6 +56,9 @@ export const useSettingStore = defineStore({
   actions: {
     setBlankTheme(theme: ThemeName) {
       this.blankTheme = theme
+      const darkClass = 'v-theme--dark'
+      if (theme === 'dark') document.documentElement.classList.add(darkClass)
+      else document.documentElement.classList.remove(darkClass)
       Storage.set(SETTING_KEY, this.$state)
     },
   },

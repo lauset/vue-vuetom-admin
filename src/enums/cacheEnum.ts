@@ -1,14 +1,8 @@
-/** 用户token */
-export const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN'
+// haut
+export const HAUT_ACCESS_TOKEN_KEY = 'haut_token'
+export const HAUT_USER_INFO_KEY = 'haut_user'
+export const HAUT_STORE = 'HAUT_STORE'
 
-/** 国际化 */
-export const LOCALE_KEY = 'LOCALE__'
-
-/** 主题色 */
-export const THEME_KEY = 'THEME__'
-
-/** 设置信息 */
-export const SETTING_KEY = 'SETTING__'
-
-/** 用户信息 */
-export const USER_INFO_KEY = 'USER__INFO__'
+export const LOCALE_KEY = 'VT_LOCALE'
+export const THEME_KEY = 'VT_THEME'
+export const SETTING_KEY = 'VT_SETTING'

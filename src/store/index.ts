@@ -1,10 +1,13 @@
 import { createPinia } from 'pinia'
 import type { App } from 'vue'
+import piniaPluginPersist from 'pinia-plugin-persist'
 
-const store = createPinia()
+const pinia = createPinia()
+
+pinia.use(piniaPluginPersist)
 
 export function setupStore(app: App<Element>) {
-  app.use(store)
+  app.use(pinia)
 }
 
-export { store }
+export { pinia as store }
