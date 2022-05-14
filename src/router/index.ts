@@ -17,6 +17,10 @@ export const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "layout" */ '@/layouts/Vertical'),
   },
   {
+    path: '/index',
+    redirect: '/dashboard/welcome',
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login.vue'),
@@ -34,12 +38,30 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/dashboard/vuetom',
+    name: 'Vuetom',
+    component: () =>
+      import(/* webpackChunkName: "layout" */ '@/views/dashboard/Vuetom.vue'),
+    meta: {
+      title: 'Vuetom系列',
+    },
+  },
+  {
     path: '/user/account',
     name: 'Account',
     component: () =>
       import(/* webpackChunkName: "layout" */ '@/views/user/Account.vue'),
     meta: {
       title: '账号设置',
+    },
+  },
+  {
+    path: '/haut/coruse',
+    name: 'Course',
+    component: () =>
+      import(/* webpackChunkName: "layout" */ '@/views/haut/Course.vue'),
+    meta: {
+      title: '课程信息',
     },
   },
   {
