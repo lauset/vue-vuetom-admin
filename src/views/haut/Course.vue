@@ -1,15 +1,60 @@
 <template>
   <div>
-    <vt-button size="macos" type="primary" @click="test">
-      进入页面后点我刷新课程信息
-    </vt-button>
-    <!-- {{ course.list }} -->
+    点击
+    <vt-button size="macos" type="primary" @click="test1"> 按钮 </vt-button>
+    刷新课程信息<br /><br />
+    点击
+    <vt-button size="macos" type="danger" @click="test2"> 按钮 </vt-button>
+    刷新考试信息<br /><br />
+    <v-alert v-show="true" variant="outlined" type="info" prominent>
+      <template #text
+        >尽量不要操作旧学期，如果没有 Token
+        请前往登录界面登录您的和学账号</template
+      >
+      <template #append>
+        <v-btn size="small" variant="text" @click="logout">登录界面</v-btn>
+      </template>
+    </v-alert>
     <v-alert v-show="errorShow" variant="outlined" type="error" prominent>
       <template #text>{{ errorMsg }}</template>
       <template #append>
         <v-btn size="small" variant="text">Sing in</v-btn>
       </template>
     </v-alert>
+    <div>
+      <p v-show="course.ks.length > 0" class="text-2xl mt-14 mb-6">考试列表</p>
+      <v-row>
+        <v-col v-for="(ck, idx) in course.ks" :key="ck.id" md="6" cols="12">
+          <v-card>
+            <v-card-title> {{ ck.testInfo.name }} <br /> </v-card-title>
+            <v-card-text>
+              试卷编号：{{ ck.testInfo.id }} <br />
+              开始日期：{{ ck.testInfo.open_start }} <br />
+              结束日期：{{ ck.testInfo.open_end }} <br />
+              最终分数：{{ ck.proInfo?.get_score || '-' }} <br />
+              做题时间：{{ ck.proInfo?.enter_time }} -
+              {{ ck.proInfo?.end_time }}
+              ({{ ck.proInfo?.cost_time || 0 }}秒)<br />
+              <br />
+              <vt-button
+                size="macos"
+                :plain="ck.proInfo?.get_score ? true : false"
+                :type="ck.proInfo?.get_score ? 'success' : exams[idx]?.type"
+                @click="submitTest(ck.testInfo.id, idx)"
+              >
+                {{ exams[idx].cur }}. {{ exams[idx].text }}
+              </vt-button>
+              {{
+                exams[idx].time == 0 || exams[idx].time == undefined
+                  ? ' '
+                  : ' [ ' + exams[idx]?.time + ' s ] '
+              }}
+              ⚠️ 劝你等倒计时完毕后再提交，要不做题时间就太短了
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
     <div v-for="c in course.list" :key="c.semester">
       <p v-show="c.semester >= 5" class="text-2xl mt-14 mb-6">
         赛季 {{ c.semester }}
@@ -86,6 +131,12 @@
                             class="ma-3"
                             variant="outlined"
                             size="small"
+                            @click="
+                              videoReady(
+                                ct.course_id,
+                                `/${ct.course_id}/${ct.open_id}`,
+                              )
+                            "
                           >
                             <v-icon>mdi-cached</v-icon>
                           </v-btn>
@@ -124,28 +175,74 @@
                   :value="ct.course_id"
                 >
                   <v-card-title>
-                    <div v-if="videos.enable == ct.course_id">
-                      准备就绪
-                      <p>
-                        {{ videos.title }} 视频数量：{{ videos.list.length }}
-                        ):
-                        <vt-button
-                          type="warning"
-                          size="mini"
-                          plain
-                          @click="videoStart"
-                          >启动</vt-button
-                        >
-                      </p>
-                    </div>
-                    <div v-else>
+                    <div>
                       <h4>{{ ct.course_name }}</h4>
-                      <v-text
-                        class="font-weight-light text--disabled"
-                        style="font-size: 0.8rem"
-                      >
-                        刷视频，请请点击左侧开始
-                      </v-text>
+                      <br />
+                      <div v-if="videos.enable == ct.course_id">
+                        <div>
+                          [ 作业 ]
+                          <v-text
+                            class="font-weight-light text--disabled"
+                            style="font-size: 0.8rem"
+                          >
+                            作业完成后不要重复点击
+                          </v-text>
+                          <div>
+                            <vt-button
+                              v-for="(b, i) in course.zy"
+                              :key="b.id"
+                              size="macos"
+                              plain
+                              :type="
+                                b.rec.praxise_correct_count == b.praxise_count
+                                  ? 'success'
+                                  : 'danger'
+                              "
+                              @click="
+                                submitZy(
+                                  ct.course_id,
+                                  ct.open_id,
+                                  i + 1,
+                                  b.rec.praxise_correct_count ==
+                                    b.praxise_count,
+                                )
+                              "
+                            >
+                              作业{{ i + 1 }} ({{
+                                b.rec.praxise_correct_count
+                              }}/ {{ b.praxise_count }})
+                            </vt-button>
+                          </div>
+                        </div>
+                        <br />
+                        [ 视频 ]
+                        <v-text
+                          class="font-weight-light text--disabled"
+                          style="font-size: 0.8rem"
+                        >
+                          点启动后，过十几秒重新进入该页面查看结果。
+                          如果进度没有达到95%那么就再次启动
+                        </v-text>
+                        <p>
+                          {{ videos.title }} 数量：{{ videos.list.length }}
+                          ):
+                          <vt-button
+                            type="warning"
+                            size="mini"
+                            plain
+                            @click="videoStart"
+                            >启动</vt-button
+                          >
+                        </p>
+                      </div>
+                      <div v-else>
+                        <v-text
+                          class="font-weight-light text--disabled"
+                          style="font-size: 0.8rem"
+                        >
+                          !!! 需要更新数据，请请点击左侧开始按钮获取最新数据
+                        </v-text>
+                      </div>
                     </div>
                   </v-card-title>
                   <v-card-text>
@@ -168,14 +265,19 @@
 
 <script setup lang="ts">
 import { onMounted, getCurrentInstance, reactive, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { submitAnswer } from '@/apis/haut/zy'
+import { enjoin, queryTest, submitTestAnswer } from '@/apis/haut/ks'
 import { queryCourse, queryClassRoom } from '@/apis/haut/course'
 import { useHautStore } from '@/store/modules/haut'
 import { videoRun } from '@/utils/haut'
 
 const { proxy } = getCurrentInstance()
 const haut = useHautStore()
+const router = useRouter()
 const errorMsg = ref('')
 const errorShow = ref(false)
+const btnDisable = ref(false)
 const courseTab = reactive([])
 const videoId = ref(null)
 const m = proxy.$msg
@@ -183,6 +285,8 @@ const token = haut.getToken
 
 const course = reactive({
   list: [],
+  zy: [],
+  ks: [],
   // list: [
   //   {
   //     semester: 5,
@@ -399,40 +503,101 @@ const videos = reactive({
   course: {},
 })
 
+const exams = reactive([])
+const timer = ref(null)
+
 const print = async val => {
   const vc = document.getElementById(`vt-video-console-${videoId.value}`)
   vc.innerHTML += `<br />${new Date().toLocaleString()} :  ${val}`
   vc.scrollTop = vc.scrollHeight
 }
 
-const test = () => {
-  if (!token) return m.error('Error', { details: 'Need Token' })
+const test1 = () => {
+  if (!token) return m.error('Error', { details: '你还没有 Token' })
   queryCourse(token)
-    .then(res => {
+    .then((res: any) => {
       errorShow.value = false
       course.list = res.data
     })
-    .catch(e => {
+    .catch((e: any) => {
       errorShow.value = true
       errorMsg.value = e.message
     })
 }
 
+const test2 = () => {
+  if (!token) return m.error('Error', { details: '你还没有 Token' })
+  queryTest(token)
+    .then((res: any) => {
+      const d = res.data
+      errorShow.value = false
+      d.forEach((dd, di) => {
+        exams[di] = Object(
+          {
+            cur: 1,
+            text: '开始',
+            type: 'danger',
+          },
+          dd,
+        )
+      })
+      course.ks = d.slice(0, 3)
+    })
+    .catch((e: any) => {
+      errorShow.value = true
+      errorMsg.value = e.message
+    })
+}
+
+const submitTest = (testId, idx) => {
+  console.log(testId)
+  const { cur, text } = exams[idx]
+  console.log(cur, text)
+  if (cur == 1) {
+    enjoin(testId, token).then((res: any) => {
+      if (res.code == 0) {
+        exams[idx].cur = 2
+        exams[idx].text = '提交'
+        exams[idx].type = 'warning'
+        exams[idx].time = 60
+        timer.value = setInterval(() => {
+          const t = exams[idx].time
+          if (t > 0) exams[idx].time = t - 1
+        }, 1000)
+        m.success('Success', { details: res.msg })
+      }
+    })
+  } else if (cur == 2) {
+    submitTestAnswer(testId, token).then((res: any) => {
+      if (res.code == 0) {
+        clearInterval(timer.value)
+        exams[idx].cur = 3
+        exams[idx].text = '刷新'
+        exams[idx].type = 'success'
+        m.success('Success', { details: res.msg })
+      }
+    })
+  } else if (cur == 3) {
+    test2()
+  }
+}
+
 const videoReady = (id, path) => {
   videoId.value = id
-  if (!token) return m.error('Error', { details: 'Need Token' })
+  if (!token) return m.error('Error', { details: '你还没有 Token' })
   queryClassRoom(path, token).then(res => {
-    console.log(56, res)
     if (res.data.course.id) {
       videos.path = path
       videos.token = token
       videos.title = res.data.course.name
       const chapterData = res.data.chapter
       const list = []
+      const zy = []
       chapterData.forEach(cd => {
         const chapterChild = cd.children
         chapterChild.forEach(cc => {
           if (cc.name.indexOf('在线作业') > -1) {
+            zy.push(cc)
             return
           }
           list.push({
@@ -444,6 +609,7 @@ const videoReady = (id, path) => {
         })
       })
       videos.course.path = videos.list = list
+      course.zy = zy
       videos.enable = id
     }
   })
@@ -454,5 +620,39 @@ const videoStart = () => {
   videoRun(videos, print)
 }
 
-onMounted(() => {})
+const submitZy = (cid: string, oid: string, type: number, disable: boolean) => {
+  if (disable) return m.error('Error', { details: '不要重复点击' })
+  if (!token) return m.error('Error', { details: '你还没有 Token' })
+  if (btnDisable.value) return
+  btnDisable.value = true
+  submitAnswer(`${cid}/${oid}`, type, token)
+    .then((res: any) => {
+      if (res.code === 0) {
+        m.success('Success', { details: res.msg })
+      }
+      errorShow.value = false
+      setTimeout(() => {
+        videoReady(cid, `/${cid}/${oid}`)
+      }, 1000)
+    })
+    .catch((e: any) => {
+      errorShow.value = true
+      errorMsg.value = e.message
+    })
+  setTimeout(() => {
+    btnDisable.value = false
+  }, 5000)
+}
+
+const logout = async () => {
+  await haut.logout().finally(() => {
+    router.push({
+      name: 'Login',
+    })
+  })
+}
+
+onMounted(() => {
+  if (!token) return m.error('Error', { details: '你还没有登录' })
+})
 </script>
