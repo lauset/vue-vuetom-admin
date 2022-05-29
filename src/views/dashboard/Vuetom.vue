@@ -9,7 +9,7 @@
         lg="4"
         class="align-self-start"
       >
-        <v-card color="text-center" class="vuetom-card">
+        <v-card color="text-center" class="vuetom-card" @click="toUrl(l.web)">
           <v-img :src="l.src" height="150" cover></v-img>
           <v-card-text class="d-flex flex-column justify-center align-center">
             <!-- <v-avatar color="primary" class="mt-10" icon size="50">
@@ -26,7 +26,14 @@
           </v-card-text>
           <v-card-text class="vuetom-card-bottom">
             <div class="vuetom-card-bottom-btn" @click="toUrl(l.url)">Git</div>
-            <!-- <v-btn color="vuetom-card-bottom-btn" class="mt-4"> Git </v-btn> -->
+            <vt-button
+              color="vuetom-card-bottom-btn"
+              size="macos"
+              plain
+              class="mt-4"
+            >
+              Go go go
+            </vt-button>
           </v-card-text>
         </v-card>
       </v-col>
@@ -45,17 +52,19 @@ const icons = {
 }
 const list = [
   {
-    id: 1,
-    title: 'Vuetom.js',
-    desc: 'A JS library supporting plug-in mode',
-    src: proxy.getAssetsImg('cover/cover-vuetomjs.jpg'),
-    url: 'https://github.com/lauset/vuetom-js',
+    id: 4,
+    title: 'Vitepress-theme-vuetom',
+    desc: 'A vitepress theme, including document and blog styles',
+    src: proxy.getAssetsImg('cover/cover-vuetom.jpeg'),
+    web: 'http://tomhub.cn',
+    url: 'https://github.com/lauset/vitepress-theme-vuetom',
   },
   {
     id: 2,
     title: 'Vuetom UI',
     desc: 'A flat UI supporting vue3',
     src: proxy.getAssetsImg('cover/cover-vuetomui.jpg'),
+    web: 'http://ui.tomhub.cn',
     url: 'https://github.com/lauset/vuetom-ui',
   },
   {
@@ -63,17 +72,19 @@ const list = [
     title: 'Vuetom Cli',
     desc: 'A simple CLI for vitepress-theme-vuetom',
     src: proxy.getAssetsImg('cover/cover-vuetomcli.png'),
+    web: 'https://www.npmjs.com/package/vuetom-cli',
     url: 'https://github.com/lauset/vuetom-cli',
   },
   {
-    id: 4,
-    title: 'Vitepress-theme-vuetom',
-    desc: 'A vitepress theme, including document and blog styles',
-    src: proxy.getAssetsImg('cover/cover-vuetom.jpeg'),
-    url: 'https://github.com/lauset/vuetom-cli',
+    id: 1,
+    title: 'Vuetom.js',
+    desc: 'A JS library supporting plug-in mode',
+    src: proxy.getAssetsImg('cover/cover-vuetomjs.jpg'),
+    web: 'https://www.npmjs.com/package/vuetom',
+    url: 'https://github.com/lauset/vuetom-js',
   },
 ]
-const toUrl = _url => {
+const toUrl = (_url: string) => {
   window.open(_url)
 }
 </script>
