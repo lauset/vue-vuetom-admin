@@ -5,7 +5,7 @@ import { HAUT_ACCESS_TOKEN_KEY, HAUT_STORE } from '@/enums/cacheEnum'
 import { hautLogin } from '@/apis/haut/user'
 
 interface hautLoginParams {
-  num: string,
+  num: string
   password: string
 }
 
@@ -24,9 +24,9 @@ export const useHautStore = defineStore({
       {
         key: HAUT_STORE,
         storage: localStorage,
-        paths: ['name', 'stu']
-      }
-    ]
+        paths: ['name', 'stu'],
+      },
+    ],
   },
   getters: {
     getToken(): string {
@@ -37,7 +37,7 @@ export const useHautStore = defineStore({
     },
     getStu(): any {
       return this.stu
-    }
+    },
   },
   actions: {
     resetHaut() {
@@ -48,20 +48,22 @@ export const useHautStore = defineStore({
     },
     setHautToken(stu: any) {
       this.stu = stu
-      this.token = stu.token ?? ''
-      this.name = stu.realname ?? 'guest'
+      this.token = stu.token
+      this.name = stu.realname
       const ex = 7 * 24 * 60 * 60 * 1000
       Storage.set(HAUT_ACCESS_TOKEN_KEY, this.token, ex)
     },
     async login(params: hautLoginParams) {
       try {
         const { code, data } = await hautLogin(params)
-        console.log(code, data);
         if (code == 0) this.setHautToken(data)
       } catch (err) {
         return Promise.reject(err)
       }
-    }
+    },
+    async logout() {
+      this.resetHaut()
+    },
   },
 })
 
