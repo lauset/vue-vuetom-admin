@@ -541,7 +541,7 @@ const test2 = () => {
           dd,
         )
       })
-      course.ks = d.slice(0, 3)
+      course.ks = d.slice(0, 9)
     })
     .catch((e: any) => {
       errorShow.value = true
