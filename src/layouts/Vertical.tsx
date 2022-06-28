@@ -1,6 +1,7 @@
 import {
   defineComponent,
   computed,
+  ref,
   reactive,
   getCurrentInstance,
 } from 'vue'
@@ -17,10 +18,11 @@ export default defineComponent({
   },
   setup() {
     const { proxy }: any = getCurrentInstance()
+    const name = ref('')
     const haut = useHautStore()
     const settings = useSettingStore()
     const theme = computed(() => settings.getBlankTheme)
-    const name = haut.getName
+    name.value = haut.getName
     return () => (
       <v-app theme={theme.value}>
         <vertical-menu></vertical-menu>
@@ -46,7 +48,7 @@ export default defineComponent({
             </v-icon>
           </a>
           <theme-switcher></theme-switcher>
-          <div style={['padding: 0 1rem;']}>Haut: {name}</div>
+          <div style={['padding: 0 1rem;']}>Haut: {name.value}</div>
         </div>
       </div>
     </v-app-bar>

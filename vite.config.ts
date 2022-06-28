@@ -19,18 +19,35 @@ export default defineConfig(({ mode }: UserConfig): UserConfig => {
       open: true,
       https: false,
       proxy: {
-        '/haut': {
+        // Haut api
+        '/edu': {
           target: 'https://api.jinkex.com',
           timeout: 8000,
           changeOrigin: true,
-          rewrite: pathStr => pathStr.replace('/haut', '')
+          rewrite: pathStr => pathStr.replace('/edu', '/edu'),
         },
-        '/m1': {
-          target: 'https://www.fastmock.site/mock/9d7d214a196f7a703ff54d6a07235871/m1',
+        // Haut exam api
+        '/exam': {
+          target: 'https://api.jinkex.com',
           timeout: 8000,
           changeOrigin: true,
-          rewrite: pathStr => pathStr.replace('/m1', '')
-        }
+          rewrite: pathStr => pathStr.replace('/exam', '/exam'),
+        },
+        // Mock
+        '/m1': {
+          target:
+            'https://www.fastmock.site/mock/9d7d214a196f7a703ff54d6a07235871/m1',
+          timeout: 8000,
+          changeOrigin: true,
+          rewrite: pathStr => pathStr.replace('/m1', ''),
+        },
+        // Express
+        '/ex': {
+          target: 'http://localhost:3002',
+          timeout: 5000,
+          changeOrigin: true,
+          rewrite: pathStr => pathStr.replace('/ex', ''),
+        },
       },
     },
     build: {

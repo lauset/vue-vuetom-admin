@@ -96,11 +96,11 @@ export default defineComponent({
               to={{ name: 'Vuetom' }}
               icon={icons.mdiHeli}
             ></MenuLink>
-            {/* <MenuLink
-              title='Typography'
-              to={{ name: 'typography' }}
+            <MenuLink
+              title='Expense'
+              to={{ name: 'Expense' }}
               icon={icons.mdiAlphaTBoxOutline}
-            ></MenuLink> */}
+            ></MenuLink>
             {/* <MenuLink
         title="Icons"
         :to="{ name: 'icons' }"

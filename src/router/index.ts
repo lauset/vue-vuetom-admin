@@ -2,7 +2,7 @@ import { type App } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const outsideLayout: Array<any> = []
-const whiteNameList: Array<any> = []
+const whiteNameList: Array<any> = ['Login', 'Err404']
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -38,12 +38,21 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/dashboard/vuetom',
+    path: '/vuetom',
     name: 'Vuetom',
     component: () =>
       import(/* webpackChunkName: "layout" */ '@/views/dashboard/Vuetom.vue'),
     meta: {
       title: 'Vuetom系列',
+    },
+  },
+  {
+    path: '/expense',
+    name: 'Expense',
+    component: () =>
+      import(/* webpackChunkName: "layout" */ '@/views/dashboard/Expense.vue'),
+    meta: {
+      title: 'Expense报销',
     },
   },
   {
