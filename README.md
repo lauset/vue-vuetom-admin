@@ -3,7 +3,8 @@
 基于 vite2.x + vue3.x + vuetify3.x + typescript4.x 的后台管理系统模板
 
 - [vue3 staging](https://staging-cn.vuejs.org/guide/introduction.html)
-- [vuetify 文档](https://next.vuetifyjs.com/en/getting-started/installation/)
+- [vuetify3](https://next.vuetifyjs.com/en/getting-started/installation/)
+- [vercel dashboard](https://vercel.com/dashboard)
 
 
 ## 安装使用
@@ -19,7 +20,7 @@ git clonen https://github.com/lauset/vue-vuetom-admin
 ```bash
 cd vue-vuetom-admin
 
-pnpm install
+pnpm i
 ```
 
 - 运行
@@ -28,9 +29,26 @@ pnpm install
 pnpm dev
 ```
 
+- 打包
+
+```bash
+pnpm build
+```
+
+- 预览
+
+```bash
+pnpm preview
+```
+
 ## TODO
 
-- [x] 登录、暗黑主题切换
+- [x] 登录、Haut登录
+- [x] 暗黑主题切换
+- [x] redis 连接测试
+- [x] vercel 部署代理
+- [x] tsx 语法
+- [ ] 布局S
 - [ ] 其他...
 
 ## Git 提交规范
