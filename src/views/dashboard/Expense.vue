@@ -158,7 +158,7 @@
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { query, add, del } from '@/apis/expense'
 
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
 
 const m = proxy.$msg
 

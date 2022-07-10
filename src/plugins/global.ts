@@ -1,11 +1,11 @@
-import { App, getCurrentInstance } from 'vue'
+import { App } from 'vue'
 
 const getAssetsImg = (url: string) => {
   return new URL(`../assets/images/${url}`, import.meta.url).href
 }
 
 //将数字转换成人民币大写的方法
-const digitUppercase = n => {
+const digitUppercase = (n: number) => {
   const fraction = ['角', '分']
   const digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
   const unit = [

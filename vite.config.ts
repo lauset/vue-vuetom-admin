@@ -1,13 +1,12 @@
-import fs from 'fs'
+import * as fs from 'fs'
 import { resolve } from 'path'
 import { defineConfig, UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 
 export default defineConfig(({ mode }: UserConfig): UserConfig => {
   const GVA_ENV = dotenv.parse(fs.readFileSync(`.env.${mode}`))
-
   return {
     resolve: {
       alias: {

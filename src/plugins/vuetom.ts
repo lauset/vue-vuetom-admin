@@ -1,7 +1,7 @@
+import { App } from 'vue'
 import VuetomUI from 'vuetom-ui'
 import { createVuetom } from 'vuetom'
-import datePlugin from 'vuetom/esm/plugin/date'
-import { App } from 'vue'
+import datePlugin from 'vuetom/plugin/date'
 import { setupVuetomMsg } from '@/utils/request'
 import 'vuetom-ui/dist/vuetom-ui.css'
 

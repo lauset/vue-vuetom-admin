@@ -5,13 +5,9 @@ import { setupVuetomUI } from '@/plugins/vuetom'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/langs'
-import { setupGlobal } from '@/plugins'
+import { setupGlobal as setupPlugins } from '@/plugins'
 
 const app = createApp(App)
-
-function setupPlugins() {
-  setupGlobal(app)
-}
 
 async function setupApp() {
   setupVuetify(app)
@@ -22,6 +18,6 @@ async function setupApp() {
   app.mount('#app')
 }
 
-setupPlugins()
+setupPlugins(app)
 
 setupApp()
