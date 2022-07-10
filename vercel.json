@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/edu/(.*)",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/exam/(.*)",
+      "destination": "/api/proxy"
+    },
+    {
+      "source": "/ex/(.*)",
+      "destination": "/api/proxy"
+    }
+  ]
+}
