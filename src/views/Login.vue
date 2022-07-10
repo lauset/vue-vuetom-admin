@@ -5,7 +5,7 @@
         <!-- logo -->
         <v-card-title class="d-flex align-center justify-center py-7">
           <v-img
-            :src="getAssetsImg('logos/logo01.png')"
+            :src="g('logos/logo01.png')"
             max-height="50px"
             max-width="50px"
             alt="logo"
@@ -76,13 +76,7 @@
         <!-- social links -->
         <v-card-actions class="d-flex justify-center">
           <v-btn v-for="link in socialLink" :key="link.icon" icon class="ms-1">
-            <v-icon
-              :color="
-                $vuetify.theme.current === 'dark'
-                  ? link.colorInDark
-                  : link.color
-              "
-            >
+            <v-icon :color="t === 'dark' ? link.colorInDark : link.color">
               {{ link.icon }}
             </v-icon>
             <!-- <span :class="'mdi ' + link.icon"></span> -->
@@ -93,31 +87,27 @@
     <!-- background triangle shape  -->
     <img
       class="auth-mask-bg"
-      :src="
-        getAssetsImg(
-          `cover/bg-${$vuetify.theme.current == 'dark' ? 'dark' : 'light'}.png`,
-        )
-      "
+      :src="g(`cover/bg-${t == 'dark' ? 'dark' : 'light'}.png`)"
     />
     <!-- tree -->
     <!-- <v-img
       class="auth-tree"
       width="247"
       height="185"
-      :src="getAssetsImg('other/tree.png')"
+      :src="g('other/tree.png')"
     ></v-img> -->
     <!-- tree  -->
     <!-- <v-img
       class="auth-tree-3"
       width="377"
       height="289"
-      :src="getAssetsImg('other/tree-3.png')"
+      :src="g('other/tree-3.png')"
     ></v-img> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance } from 'vue'
+import { ref, watch, getCurrentInstance, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settings'
 import { useHautStore } from '@/store/modules/haut'
@@ -128,9 +118,16 @@ const isPasswordVisible = ref(false)
 const num = ref('admin')
 const password = ref('admin')
 const theme = ref('')
-const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance() as any
+const g = proxy.getAssetsImg
 const m = proxy.$msg
+const t = ref('')
 const haut = useHautStore()
+const refreshTheme = () => {
+  nextTick(() => {
+    t.value = proxy.$vuetify.theme.current
+  })
+}
 const socialLink = [
   {
     icon: 'mdi-facebook',
@@ -144,10 +141,12 @@ const socialLink = [
   },
 ]
 theme.value = settings.getBlankTheme
+refreshTheme()
 watch(
   () => theme.value,
   (newVal, oldVal) => {
     settings.setBlankTheme(newVal === 'dark' ? 'dark' : 'light')
+    refreshTheme()
   },
 )
 const handleSubmit = async () => {
