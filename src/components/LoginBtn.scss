@@ -7,4 +7,6 @@
   &:hover {
     box-shadow: none !important;
   }
+  @apply border-2 border-opacity-0;
+  @apply hover:border-opacity-10;
 } 
