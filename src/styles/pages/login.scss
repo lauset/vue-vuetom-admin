@@ -1,6 +1,6 @@
 .auth-wrapper {
   display: flex;
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height: 50vh;
   width: 100%;
   flex-basis: 100%;
   align-items: center;
@@ -9,11 +9,13 @@
   a {
     text-decoration: unset;
     font-weight: bold;
-    color: map-get($pink, 'lighten-2');
+    color: var(--vt-c-second);
+    // color: map-get($pink, 'lighten-2');
   }
 
   a:hover {
-    color: map-get($pink, 'lighten-1');
+    color: var(--vt-c-second-light);
+    // color: map-get($pink, 'lighten-1');
   }
 
   // auth v1

@@ -1,0 +1,229 @@
+
+
+//
+//* ——— Card ——————————————————
+//
+
+$card-spacer: 20px;
+$card-spacer-content: 16px;
+
+.v-card {
+  // background-color: var(--vt-c-bg-soft);
+  // box-shadow: var(--vt-shadow-3);
+  .v-card__title {
+    line-height: 1;
+    padding-top: $card-spacer;
+    padding-bottom: $card-spacer;
+  }
+  .v-card__title ~ .v-card__title {
+    padding-top: $card-spacer-content;
+  }
+  .v-card__subtitle,
+  .v-card-text,
+  .v-card__actions {
+    padding-top: 0;
+
+    .v-card {
+      > .v-card__subtitle:first-child,
+      > .v-card__text:first-child,
+      > .v-card__actions:first-child {
+        padding-top: $card-spacer;
+      }
+    }
+
+    &:last-child {
+      padding-bottom: $card-spacer;
+    }
+  }
+
+  .v-divider + {
+    .v-card__subtitle,
+    .v-card-text,
+    .v-card__actions {
+      padding-top: $card-spacer-content;
+    }
+  }
+
+  .v-card__actions {
+    &.dense {
+      padding: 0 calc(#{$card-spacer} - 8px) calc(#{$card-spacer} - 8px);
+      .v-btn {
+        &:not(.v-btn--icon) {
+          min-width: 68px;
+        }
+      }
+    }
+  }
+}
+
+//
+//* ——— Button ——————————————————
+//
+
+.v-btn:not(.v-btn--outlined) {
+  &.primary,
+  &.secondary,
+  &.accent,
+  &.success,
+  &.error,
+  &.warning,
+  &.info {
+    color: var(--vt-c-text-1);
+  }
+}
+
+.vt-button {
+  color: var(--vt-c-text-2);
+}
+
+$btn-custom-heights: (
+  'x-small': 26,
+  'small': 30,
+  'default': 38,
+  'large': 42,
+  'x-large': 46,
+);
+
+.v-btn {
+  &:not(.v-btn--round) {
+    @each $name, $height in $btn-custom-heights {
+      &.v-size--#{$name} {
+        height: #{$height}px !important;
+      }
+    }
+  }
+}
+
+.v-btn--icon {
+  @each $name, $height in $btn-custom-heights {
+    &.v-size--#{$name} {
+      height: #{$height}px !important;
+      width: #{$height}px !important;
+    }
+  }
+}
+
+// @include app-elevation('v-btn--is-elevated', 3, !important);
+// @include app-elevation('v-btn--is-elevated:hover', 4, !important);
+// @include app-elevation('v-btn--is-elevated:active', 2, !important);
+
+//
+//* ——— Menu ——————————————————
+//
+
+.v-menu__content {
+  &:not(.list-style) {
+    .v-list-item {
+      height: 2.375rem;
+      min-height: 2.375rem;
+
+      .v-list-item__icon {
+        margin: 8px 0;
+      }
+    }
+
+    .v-list.v-list--dense {
+      .v-list-item {
+        min-height: 2rem;
+        height: 2rem;
+      }
+
+      .v-list-item__icon {
+        margin: 5px 0;
+      }
+
+      .v-list-item__title,
+      .v-list-item__subtitle,
+      .v-list-item .v-list-item__title,
+      .v-list-item .v-list-item__subtitle {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+//
+//* ——— Form ——————————————————
+//
+
+.v-input {
+  .v-input__control {
+    .v-field {
+      transition: border 0.5s;
+      border: 2px solid var(--vt-c-brand-light);
+      border-radius: 0.5rem;
+      &:hover {
+        border: 2px solid var(--vt-c-brand-dark);
+      }
+      &.v-field--active {
+        border: 2px solid var(--vt-c-brand-dark);
+      }
+      .v-field__field {
+        min-height: 35px;
+        .v-field-label--floating {
+          opacity: 1;
+          color: var(--vt-c-brand);
+          background-color: var(--vt-c-bg-soft);
+          border-radius: 5px;
+          padding: 3px;
+          font-weight: bold;
+          transition: background 0.5s;
+          transform: translateY(-80%);
+        }
+      }
+      .v-field__overlay {
+        background-color: var(--vt-c-bg);
+      }
+      .v-field__outline {
+        display: none;
+      }
+    }
+  }
+}
+
+
+//
+//* ——— Slider ——————————————————
+//
+
+.v-slider__track-background {
+  opacity: 0.38;
+}
+
+.v-slider__thumb-label-container {
+  svg {
+    color: #fff;
+  }
+}
+
+//
+//* ——— Switch ——————————————————
+//
+
+.v-input--selection-controls__ripple:before {
+  opacity: 0.08 !important;
+}
+
+
+@media (max-width: 450px) {
+  .v-data-table {
+    .v-data-footer {
+      .v-data-footer__select {
+        min-width: 100%;
+      }
+    }
+  }
+}
+
+//
+//* ——— App ——————————————————
+//
+
+.v-application {
+  background-color: var(--vt-c-bg);
+  transition: background 0.5s;
+  a {
+    text-decoration: none;
+  }
+}
+

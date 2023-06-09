@@ -6,6 +6,8 @@ import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/langs'
 import { setupGlobal as setupPlugins } from '@/plugins'
+import 'tailwindcss/tailwind.css'
+import '@/styles/index.scss'
 
 const app = createApp(App)
 
