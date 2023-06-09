@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import { defineConfig, UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import AutoImport from 'unplugin-auto-import/vite'
 import * as dotenv from 'dotenv'
 
 export default defineConfig(({ mode }: UserConfig): UserConfig => {
@@ -68,6 +69,38 @@ export default defineConfig(({ mode }: UserConfig): UserConfig => {
         },
       },
     },
-    plugins: [vue(), vueJsx()],
+    plugins: [
+      vue(),
+      vueJsx(),
+      AutoImport({
+        include: [
+          /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+          /\.vue$/,
+          /\.vue\?vue/, // .vue
+          /\.md$/, // .md
+        ],
+        imports: [
+          'vue',
+          'vue-router',
+          'vue-i18n',
+          '@vueuse/head',
+          '@vueuse/core',
+          {
+            axios: [
+              ['default', 'axios'], // import { default as axios } from 'axios',
+            ],
+            dayjs: [['default', 'dayjs']],
+          },
+        ],
+        dts: true,
+        // eslint报错解决
+        eslintrc: {
+          enabled: true, // Default `false`
+          filepath: './auto-imports.json', // `./.eslintrc-auto-import.json`
+          globalsPropValue: true,
+        },
+        resolvers: [],
+      }),
+    ],
   }
 })
