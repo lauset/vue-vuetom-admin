@@ -1,3 +1,7 @@
-@import './tailwind/main.scss';
-@import './login.scss';
-@import './page.scss';
+// base
+@import "./base/vars.scss";
+// ui
+@import "./ui/override.scss";
+// pages
+@import "./pages/login.scss";
+@import "./pages/welcome.scss";

@@ -4,13 +4,14 @@ import { store } from '@/store'
 import { Storage } from '@/utils/Storage'
 
 /** Theme Value */
-export type ThemeName = 'light' | 'dark'
+export type ThemeName = 'light' | 'dark' | string
 
 /** Default Config */
 export type SettingState = {
   blankTheme: ThemeName
   navTheme: ThemeName
   layout: 'blank' | 'vertical' | 'horizontal'
+  menuShow: boolean
   // production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 }
 
@@ -18,6 +19,7 @@ export const defaultConfig: SettingState = {
   blankTheme: 'dark',
   navTheme: 'dark',
   layout: 'vertical',
+  menuShow: true,
   // production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
 }
 
@@ -59,12 +61,18 @@ export const useSettingStore = defineStore({
     getLayout(): string {
       return this.layout
     },
+    getMenuShow(): boolean {
+      return this.menuShow
+    },
   },
   actions: {
     setBlankTheme(theme: ThemeName) {
       setDomTheme(theme)
       this.blankTheme = theme
       Storage.set(SETTING_KEY, this.$state)
+    },
+    setMenuShow(show: boolean) {
+      this.menuShow = show
     },
   },
 })

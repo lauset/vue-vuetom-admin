@@ -1,5 +1,5 @@
 import { type App } from 'vue'
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const outsideLayout: Array<any> = []
 const whiteNameList: Array<any> = ['Login', 'Err404']
@@ -10,15 +10,14 @@ export const routes: Array<RouteRecordRaw> = [
     redirect: '/login',
   },
   {
+    path: '/index',
+    redirect: '/dashboard/welcome',
+  },
+  {
     path: '/vertical',
     name: 'VerticalLayout',
     redirect: '/dashboard/welcome',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/layouts/Vertical'),
-  },
-  {
-    path: '/index',
-    redirect: '/dashboard/welcome',
+    component: () => import('@/layouts/Vertical'),
   },
   {
     path: '/login',
@@ -31,8 +30,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/dashboard/welcome',
     name: 'Welcome',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/views/dashboard/Welcome.vue'),
+    component: () => import('@/views/dashboard/Welcome.vue'),
     meta: {
       title: '欢迎页',
     },
@@ -40,8 +38,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/vuetom',
     name: 'Vuetom',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/views/dashboard/Vuetom.vue'),
+    component: () => import('@/views/dashboard/Vuetom.vue'),
     meta: {
       title: 'Vuetom系列',
     },
@@ -49,8 +46,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/expense',
     name: 'Expense',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/views/dashboard/Expense.vue'),
+    component: () => import('@/views/dashboard/Expense.vue'),
     meta: {
       title: 'Expense报销',
     },
@@ -58,8 +54,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/user/account',
     name: 'Account',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/views/user/Account.vue'),
+    component: () => import('@/views/user/Account.vue'),
     meta: {
       title: '账号设置',
     },
@@ -67,10 +62,25 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/haut/coruse',
     name: 'Course',
-    component: () =>
-      import(/* webpackChunkName: "layout" */ '@/views/haut/Course.vue'),
+    component: () => import('@/views/haut/Course.vue'),
     meta: {
       title: '课程信息',
+    },
+  },
+  {
+    path: '/other/demo1',
+    name: 'Demo1',
+    component: () => import('@/views/other/Demo1'),
+    meta: {
+      title: 'DEMO1',
+    },
+  },
+  {
+    path: '/other/demo2',
+    name: 'Demo2',
+    component: () => import('@/views/other/Demo2'),
+    meta: {
+      title: 'DEMO2',
     },
   },
   {
@@ -85,7 +95,7 @@ export const routes: Array<RouteRecordRaw> = [
 ]
 
 export const router = createRouter({
-  history: createWebHashHistory(''),
+  history: createWebHistory(''),
   routes,
 })
 
