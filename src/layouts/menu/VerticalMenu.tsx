@@ -1,12 +1,6 @@
-import {
-  defineComponent,
-  computed,
-  ref,
-  reactive,
-  getCurrentInstance,
-} from 'vue'
 import MenuGroup from './MenuGroup'
 import MenuLink from './MenuLink'
+import { useSettingStore } from '@/store/modules/settings'
 import './VerticalMenu.scss'
 
 export default defineComponent({
@@ -15,7 +9,7 @@ export default defineComponent({
     type: Boolean,
     default: null,
   },
-  setup(props) {
+  setup() {
     const { proxy }: any = getCurrentInstance()
     const icons = {
       mdiHomeOutline: 'mdi-home-outline',
@@ -29,18 +23,17 @@ export default defineComponent({
       mdiHeli: 'mdi-helicopter',
       mdiDashboard: 'mdi-certificate-outline',
     }
-    const isDrawerOpen = true
+    const settings = useSettingStore()
+    const menuShow = computed(() => settings.getMenuShow)
     const logoSrc = proxy.getAssetsImg('logos/logo01.png')
     return () => (
       <>
         <v-navigation-drawer
-          value={isDrawerOpen}
+          v-model={menuShow.value}
           app
           floating
           width='260'
           class='app-navigation-menu'
-          right={'$vuetify.rtl'}
-          onInput={val => $emit('update:is-drawer-open', val)}
         >
           <div class='vertical-nav-header d-flex items-center ps-6 pe-5 pt-5 pb-2'>
             <router-link
@@ -64,7 +57,11 @@ export default defineComponent({
             </router-link>
           </div>
           <v-list expand shaped class='vertical-nav-menu-items pr-5'>
-            <MenuLink title='Dashboard' to={{ name: 'Welcome' }} icon={icons.mdiDashboard}></MenuLink>
+            <MenuLink
+              title='Dashboard'
+              to={{ name: 'Welcome' }}
+              icon={icons.mdiDashboard}
+            ></MenuLink>
             <MenuLink
               title='Account Settings'
               to={{ name: 'Account' }}
@@ -77,11 +74,17 @@ export default defineComponent({
                 default: () => (
                   <>
                     <MenuLink
-                      title='New Account Page'
-                      to={{ name: 'Account' }}
-                      target='_blank'
+                      icon=''
+                      title='Demo1'
+                      to={{ name: 'Demo1' }}
                     ></MenuLink>
                     <MenuLink
+                      icon=''
+                      title='Demo2'
+                      to={{ name: 'Demo2' }}
+                    ></MenuLink>
+                    <MenuLink
+                      icon=''
                       title='Error Page'
                       to={{ name: 'Err404' }}
                     ></MenuLink>
@@ -89,8 +92,12 @@ export default defineComponent({
                 ),
               }}
             ></MenuGroup>
-            <div class="vt-line"></div>
-            <MenuLink title='Course' to={{ name: 'Course' }} icon={icons.mdiAlphaTBoxOutline}></MenuLink>
+            <div class='vt-line'></div>
+            <MenuLink
+              title='Course'
+              to={{ name: 'Course' }}
+              icon={icons.mdiAlphaTBoxOutline}
+            ></MenuLink>
             <MenuLink
               title='Vuetom'
               to={{ name: 'Vuetom' }}
@@ -101,11 +108,6 @@ export default defineComponent({
               to={{ name: 'Expense' }}
               icon={icons.mdiAlphaTBoxOutline}
             ></MenuLink>
-            {/* <MenuLink
-        title="Icons"
-        :to="{ name: 'icons' }"
-        :icon="icons.mdiEyeOutline"
-      ></MenuLink> */}
           </v-list>
           {/* <a
       href="https://themeselection.com/products/materio-vuetify-vuejs-admin-template"

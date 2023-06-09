@@ -11,7 +11,6 @@
               outlined
             ></v-text-field>
           </v-col>
-
           <v-col md="6" cols="12">
             <v-text-field
               v-model="accountDataLocale.name"
@@ -20,7 +19,6 @@
               outlined
             ></v-text-field>
           </v-col>
-
           <v-col cols="12" md="6">
             <v-text-field
               v-model="accountDataLocale.email"
@@ -29,7 +27,6 @@
               outlined
             ></v-text-field>
           </v-col>
-
           <v-col cols="12" md="6">
             <v-text-field
               v-model="accountDataLocale.role"
@@ -38,7 +35,6 @@
               outlined
             ></v-text-field>
           </v-col>
-
           <v-col cols="12" md="6">
             <v-select
               v-model="accountDataLocale.status"
@@ -48,7 +44,6 @@
               :items="status"
             ></v-select>
           </v-col>
-
           <v-col cols="12" md="6">
             <v-text-field
               v-model="accountDataLocale.company"
@@ -57,7 +52,6 @@
               label="Company"
             ></v-text-field>
           </v-col>
-
           <v-col cols="12">
             <v-btn color="primary" class="me-3 mt-4"> Save changes </v-btn>
             <v-btn
@@ -77,32 +71,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue'
-
 const props = defineProps({
   accountData: Object,
 })
-
 const status = ['Active', 'Inactive', 'Pending', 'Closed']
-
 const accountDataLocale = ref(JSON.parse(JSON.stringify(props.accountData)))
-
 const resetForm = () => {
   accountDataLocale.value = JSON.parse(JSON.stringify(props.accountData))
-}
-
-const icons = {
-  mdiAlertOutline: 'mdi-alert-outline',
-  mdiCloudUploadOutline: 'mdi-cloud-upload-outline',
 }
 </script>
 
 <style lang="scss">
 .settings-wrapper {
-  .v-input {
-    .v-input__control {
-      max-height: 30px !important;
-    }
-  }
 }
 </style>

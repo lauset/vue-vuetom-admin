@@ -1,8 +1,3 @@
-import {
-  defineComponent,
-  computed,
-  ref,
-} from 'vue'
 import './MenuLink.scss'
 
 export default defineComponent({
@@ -22,8 +17,8 @@ export default defineComponent({
     },
     to: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const micon = ref('mdi-checkbox-blank-circle-outline')
@@ -32,17 +27,13 @@ export default defineComponent({
         <v-list-item
           to={props.to}
           target={props.target}
+          rounded='sm'
           class='vertical-nav-menu-link'
           active-class='bg-gradient-primary white--text'
-        >
-          <v-list-item-icon 
-            class={[props.icon ?? 'alternate-icon-small']}>
-              {props.icon ?? micon.value}
-          </v-list-item-icon>
-          <v-list-item-title>{props.title}</v-list-item-title>
-        </v-list-item>
+          prepend-icon={props.icon ?? micon.value}
+          title={props.title}
+        ></v-list-item>
       </>
     )
   },
 })
-

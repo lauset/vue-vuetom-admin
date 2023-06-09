@@ -1,32 +1,31 @@
-import { defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { useTheme } from 'vuetify'
 
 export default defineComponent({
   setup() {
     const { proxy }: any = getCurrentInstance()
+    const theme = useTheme()
     onMounted(() => {
       // TODO ???
       // alert(proxy.$t('welcome'))
     })
     return () => (
       <>
-        <div id='misc'>
+        <div>
           <img
-            class='misc-mask'
             height='100'
+            class='absolute bottom-0'
             src={proxy.getAssetsImg(
-              `other/misc-mask-${
-                proxy.$vuetify.theme.current == 'dark' ? 'dark' : 'light'
-              }.png`,
+              `other/misc-mask-${theme.global.name.value}.png`,
             )}
           />
-          <div class='page-title text-center px-5'>
+          <div class='text-center px-5 pt-20'>
             <h2 class='text-2xl font-weight-semibold text--primary d-flex align-center justify-center'>
               <span class='me-2'>Page Not Found</span>
               <v-icon color='warning'>mdi-alert</v-icon>
             </h2>
-            <div class='misc-character d-flex justify-center'>
+            <div class='flex justify-center'>
               <v-img
-                max-width='500'
+                max-width='420'
                 src={proxy.getAssetsImg(`other/404-bg.png`)}
               ></v-img>
             </div>

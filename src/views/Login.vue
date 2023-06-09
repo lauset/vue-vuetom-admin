@@ -1,27 +1,27 @@
 <template>
   <div class="auth-wrapper auth-v1">
     <div class="auth-inner">
-      <v-card class="auth-card">
+      <v-card class="auth-card text-primary mt-10">
         <!-- logo -->
-        <v-card-title class="d-flex align-center justify-center py-7">
+        <v-card-title class="flex justify-around items-center py-6">
           <v-img
             :src="g('logos/logo01.png')"
             max-height="50px"
             max-width="50px"
             alt="logo"
             contain
-            class="me-3"
+            class="flex-auto me-3"
           ></v-img>
-          <router-link to="/" class="d-flex align-center">
+          <router-link to="/">
             <h2 class="text-2xl font-weight-semibold">Vuetom</h2>
           </router-link>
           <v-switch
-            v-model="theme"
-            style="max-width: 2rem; margin-left: 2rem"
+            class="ml-8"
             label="Night"
             color="primary"
             value="dark"
             hide-details
+            @change="toggleTheme"
           ></v-switch>
         </v-card-title>
         <!-- title -->
@@ -87,7 +87,13 @@
     <!-- background triangle shape  -->
     <img
       class="auth-mask-bg"
-      :src="g(`cover/bg-${t == 'dark' ? 'dark' : 'light'}.png`)"
+      :src="
+        g(
+          `cover/bg-${
+            theme.global.name.value == 'dark' ? 'dark' : 'light'
+          }.png`,
+        )
+      "
     />
     <!-- tree -->
     <!-- <v-img
@@ -107,48 +113,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance, nextTick } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
 import { useSettingStore } from '@/store/modules/settings'
 import { useHautStore } from '@/store/modules/haut'
+
+const theme = useTheme()
 const settings = useSettingStore()
 const router = useRouter()
 const route = useRoute()
 const isPasswordVisible = ref(false)
 const num = ref('admin')
 const password = ref('admin')
-const theme = ref('')
 const { proxy } = getCurrentInstance() as any
 const g = proxy.getAssetsImg
 const m = proxy.$msg
 const t = ref('')
 const haut = useHautStore()
-const refreshTheme = () => {
-  nextTick(() => {
-    t.value = proxy.$vuetify.theme.current
-  })
+
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  settings.setBlankTheme(theme.global.name.value === 'dark' ? 'dark' : 'light')
 }
+
 const socialLink = [
-  {
-    icon: 'mdi-facebook',
-    color: '#4267b2',
-    colorInDark: '#4267b2',
-  },
   {
     icon: 'mdi-github',
     color: '#272727',
     colorInDark: '#ffffff',
   },
 ]
-theme.value = settings.getBlankTheme
-refreshTheme()
-watch(
-  () => theme.value,
-  (newVal, oldVal) => {
-    settings.setBlankTheme(newVal === 'dark' ? 'dark' : 'light')
-    refreshTheme()
-  },
-)
+
 const handleSubmit = async () => {
   if (num.value.trim() == '' || password.value.trim() == '') {
     return m.warning('-.-', { details: 'Please fill in the form' })
