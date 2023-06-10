@@ -41,6 +41,7 @@
                 :plain="ck.proInfo?.get_score ? true : false"
                 :type="ck.proInfo?.get_score ? 'success' : exams[idx]?.type"
                 @click="submitTest(ck.testInfo.id, idx)"
+                :disabled="ck.proInfo?.cost_time > 0"
               >
                 {{ exams[idx].cur }}. {{ exams[idx].text }}
               </vt-button>
@@ -56,10 +57,10 @@
       </v-row>
     </div>
     <div v-for="c in course.list" :key="c.semester">
-      <p v-show="c.semester >= 5" class="text-2xl mt-14 mb-6">
+      <p v-show="c.semester >= 6" class="text-2xl mt-14 mb-6">
         赛季 {{ c.semester }}
       </p>
-      <v-row v-if="c.semester >= 5">
+      <v-row v-if="c.semester >= 6">
         <v-col md="6" cols="12">
           <v-card>
             <v-tabs v-model="courseTab[c.semester]">
@@ -198,13 +199,13 @@
                                   ? 'success'
                                   : 'danger'
                               "
+                              :disabled="b.rec.praxise_correct_count == b.praxise_count"
                               @click="
                                 submitZy(
                                   ct.course_id,
                                   ct.open_id,
                                   i + 1,
-                                  b.rec.praxise_correct_count ==
-                                    b.praxise_count,
+                                  b.id
                                 )
                               "
                             >
@@ -220,7 +221,7 @@
                           class="font-weight-light text--disabled"
                           style="font-size: 0.8rem"
                         >
-                          点启动后，过十几秒重新进入该页面查看结果。
+                          点启动后，过十秒后重新点击顶部按钮刷新课程信息查看结果。
                           如果进度没有达到95%那么就再次启动
                         </v-text>
                         <p>
@@ -278,6 +279,7 @@ const router = useRouter()
 const errorMsg = ref('')
 const errorShow = ref(false)
 const btnDisable = ref(false)
+const agreeSubmit = ref(false)
 const courseTab = reactive([])
 const videoId = ref(null)
 const m = proxy.$msg
@@ -512,21 +514,34 @@ const print = async val => {
   vc.scrollTop = vc.scrollHeight
 }
 
+const startLoading = () => {
+  m.loading('Loading', { details: '请求数据中...' })
+}
+
+const closeLoading = () => {
+  m.closeAll()
+}
+
 const test1 = () => {
   if (!token) return m.error('Error', { details: '你还没有 Token' })
+  startLoading()
+  course.ks = []
   queryCourse(token)
     .then((res: any) => {
       errorShow.value = false
       course.list = res.data
+      closeLoading()
     })
     .catch((e: any) => {
       errorShow.value = true
       errorMsg.value = e.message
+      closeLoading()
     })
 }
 
 const test2 = () => {
   if (!token) return m.error('Error', { details: '你还没有 Token' })
+  startLoading()
   queryTest(token)
     .then((res: any) => {
       const d = res.data
@@ -542,15 +557,16 @@ const test2 = () => {
         )
       })
       course.ks = d.slice(0, 9)
+      closeLoading()
     })
     .catch((e: any) => {
       errorShow.value = true
       errorMsg.value = e.message
+      closeLoading()
     })
 }
 
 const submitTest = (testId, idx) => {
-  console.log(testId)
   const { cur, text } = exams[idx]
   console.log(cur, text)
   if (cur == 1) {
@@ -620,12 +636,12 @@ const videoStart = () => {
   videoRun(videos, print)
 }
 
-const submitZy = (cid: string, oid: string, type: number, disable: boolean) => {
-  if (disable) return m.error('Error', { details: '不要重复点击' })
+const submitZy = (cid: string, oid: string, type: number, wid: string) => {
+  // if (disable) return m.error('Error', { details: '不要重复点击' })
   if (!token) return m.error('Error', { details: '你还没有 Token' })
   if (btnDisable.value) return
   btnDisable.value = true
-  submitAnswer(`${cid}/${oid}`, type, token)
+  submitAnswer(`${cid}/${oid}/submit/${wid}`, type, token)
     .then((res: any) => {
       if (res.code === 0) {
         m.success('Success', { details: res.msg })

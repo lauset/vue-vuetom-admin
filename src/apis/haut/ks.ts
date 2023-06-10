@@ -1,6 +1,7 @@
 import ks5 from './kss/ks5'
 import ks6 from './kss/ks6'
 import ks7 from './kss/ks7'
+import ks8 from './kss/ks8'
 import { request } from '@/utils/request'
 
 const schoolHost = 'haut.hnscen.cn'
@@ -9,9 +10,11 @@ const submitData: any = {
   ...ks5,
   ...ks6,
   ...ks7,
+  ...ks8,
 }
 
 export const enjoin = (testId: string, token: string) => {
+  if (!submitData.hasOwnProperty(testId)) return
   const url = `/exam/v1/user/enjoin`
   const data = {
     school_host: schoolHost,
@@ -40,6 +43,7 @@ export const queryTest = (token: string) => {
 }
 
 export const submitTestAnswer = (testId: string, token: string) => {
+  if (!submitData.hasOwnProperty(testId)) return
   const url = `/exam/v1/user/submit`
   const data = {
     data: JSON.stringify(submitData[testId]),
