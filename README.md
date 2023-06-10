@@ -1,13 +1,19 @@
 # vue-vuetom-admin
 
-基于 vite2.x + vue3.x + vuetify3.x + typescript4.x 的后台管理系统模板
+Preview
+
+[netlify](https://admin.vuetom.top)
+[vercel](https://vue-vuetom-admin.vercel.app)
+
+基于 vite4.x + vue3.x + vuetify3.x + ts5.x 的后台管理系统模板
+
+Documents
 
 - [vue3 staging](https://staging-cn.vuejs.org/guide/introduction.html)
 - [vuetify3](https://next.vuetifyjs.com/en/getting-started/installation/)
 - [vercel dashboard](https://vercel.com/dashboard)
 
-
-## 安装使用
+## 快速开始
 
 - 拉取项目
 
@@ -41,14 +47,20 @@ pnpm build
 pnpm preview
 ```
 
-## TODO
+- 部署
+
+vercel
+
+netlify
+
+## 待办项
 
 - [x] 登录、Haut登录
-- [x] 暗黑主题切换
-- [x] redis 连接测试
-- [x] vercel 部署代理
+- [x] 暗黑主题
+- [x] redis 服务
+- [x] vercel 部署
 - [x] tsx 语法
-- [ ] 布局S
+- [ ] 布局风格
 - [ ] 其他...
 
 ## Git 提交规范
