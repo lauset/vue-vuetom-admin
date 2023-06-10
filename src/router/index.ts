@@ -91,6 +91,11 @@ export const routes: Array<RouteRecordRaw> = [
       layout: 'blank',
     },
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    redirect: '/404',
+  },
   ...outsideLayout,
 ]
 
@@ -99,7 +104,6 @@ export const router = createRouter({
   routes,
 })
 
-// reset router
 export function resetRouter() {
   router.getRoutes().forEach(route => {
     const { name } = route

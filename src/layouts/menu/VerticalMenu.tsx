@@ -24,12 +24,19 @@ export default defineComponent({
       mdiDashboard: 'mdi-certificate-outline',
     }
     const settings = useSettingStore()
-    const menuShow = computed(() => settings.getMenuShow)
+    const show = computed({
+      get() {
+        return settings.getMenuShow
+      },
+      set(newVal) {
+        settings.setMenuShow(newVal)
+      },
+    })
     const logoSrc = proxy.getAssetsImg('logos/logo01.png')
     return () => (
       <>
         <v-navigation-drawer
-          v-model={menuShow.value}
+          v-model={show.value}
           app
           floating
           width='260'

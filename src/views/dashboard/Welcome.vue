@@ -3,10 +3,6 @@
     <v-card>
       <v-card-title class="align-start">
         <span>Card Title</span>
-        <v-spacer></v-spacer>
-        <v-btn icon small class="me-n3 mt-n2 text-describe">
-          <v-icon> mdi-dots-vertical </v-icon>
-        </v-btn>
       </v-card-title>
       <v-card-text class="my-7">
         <div class="d-flex align-center">

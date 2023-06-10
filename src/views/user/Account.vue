@@ -12,7 +12,13 @@
           <settings :account-data="accountSettingData"></settings>
         </v-window-item>
         <v-window-item value="two">
-          {{stu}}
+          {{ stu }}
+          <v-btn color="primary" class="me-3 mt-4" @click="resetRouter">
+            reset route
+          </v-btn>
+          <v-btn color="primary" class="me-3 mt-4" @click="go">
+            reset route
+          </v-btn>
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -20,13 +26,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import Settings from './Settings.vue'
+import { resetRouter, router } from '@/router'
 import { useHautStore } from '@/store/modules/haut'
 
 const haut = useHautStore()
 const stu = haut.getStu
 const tab = ref('')
+
+const go = () => {
+  router.push('/other/demo11')
+}
 
 // account settings data
 const accountSettingData = {

@@ -8,8 +8,8 @@ $card-spacer: 20px;
 $card-spacer-content: 16px;
 
 .v-card {
-  // background-color: var(--vt-c-bg-soft);
-  // box-shadow: var(--vt-shadow-3);
+  background-color: var(--vt-c-bg-soft);
+  box-shadow: var(--vt-shadow-3);
   .v-card__title {
     line-height: 1;
     padding-top: $card-spacer;
@@ -103,10 +103,6 @@ $btn-custom-heights: (
   }
 }
 
-// @include app-elevation('v-btn--is-elevated', 3, !important);
-// @include app-elevation('v-btn--is-elevated:hover', 4, !important);
-// @include app-elevation('v-btn--is-elevated:active', 2, !important);
-
 //
 //* ——— Menu ——————————————————
 //
@@ -151,7 +147,7 @@ $btn-custom-heights: (
     .v-field {
       transition: border 0.5s;
       border: 2px solid var(--vt-c-brand-light);
-      border-radius: 0.5rem;
+      border-radius: 0.6rem;
       &:hover {
         border: 2px solid var(--vt-c-brand-dark);
       }
@@ -167,7 +163,7 @@ $btn-custom-heights: (
           border-radius: 5px;
           padding: 3px;
           font-weight: bold;
-          transition: background 0.5s;
+          transition: background 0.1s;
           transform: translateY(-80%);
         }
       }
@@ -181,39 +177,6 @@ $btn-custom-heights: (
   }
 }
 
-
-//
-//* ——— Slider ——————————————————
-//
-
-.v-slider__track-background {
-  opacity: 0.38;
-}
-
-.v-slider__thumb-label-container {
-  svg {
-    color: #fff;
-  }
-}
-
-//
-//* ——— Switch ——————————————————
-//
-
-.v-input--selection-controls__ripple:before {
-  opacity: 0.08 !important;
-}
-
-
-@media (max-width: 450px) {
-  .v-data-table {
-    .v-data-footer {
-      .v-data-footer__select {
-        min-width: 100%;
-      }
-    }
-  }
-}
 
 //
 //* ——— App ——————————————————
